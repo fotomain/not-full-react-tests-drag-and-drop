@@ -11,7 +11,6 @@
     import React, { Component } from 'react';
 
     import './styles.css';
-
     import DragItem from './DragItem';
 
     class GridDND extends Component {
