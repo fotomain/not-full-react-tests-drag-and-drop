@@ -1,0 +1,191 @@
+
+
+// elementbyid set remove display none
+// https://stackblitz.com/edit/react-fhueel?file=src%2FApp.js
+
+import React, {useState, useRef, useEffect} from 'react';
+import './styles.css';
+import {IonRow} from "@ionic/react";
+
+const GridDND = () => {
+
+
+    const dragItem = useRef();
+    const dragOverItem = useRef();
+    let list_init = []
+    for (let i = 0; i <100 ; i++) {
+        list_init[i]=
+            {
+                id: "c-"+i,
+                name: "name_"+i,
+                description: "description "+i,
+                thumb:
+                    "https://piktochart.com/wp-content/uploads/2022/04/01_Main_header-image_1.svg"
+            }
+
+    }
+
+    let realRefs:React.RefObject<HTMLDivElement> = [{current:undefined}];
+    for (let i = 0; i <list_init.length; i++){
+        realRefs[i] = React.createRef<HTMLDivElement>
+
+        // realRefs[i] = new (React.useRef(null) as any)
+    }
+
+    let spaceRefs:React.RefObject<HTMLDivElement> = [];
+    for (let i = 0; i <list_init.length; i++){
+        spaceRefs[i] = React.createRef<HTMLDivElement>
+
+        // spaceRefs[i] = new (React.useRef(null) as any)
+    }
+
+
+
+    const [state, set_state] = React.useState(
+        {
+            data_list: list_init,
+            goto_item_id:'',
+            draggable_background_color:'red',
+        }
+    );
+
+    const onDragOver = (e:any, index_in_array:any) => {
+        e.dataTransfer.dropEffect = "move";
+        console.log("=== onDragOver",e.target.innerHTML);
+        e.preventDefault()
+    };
+
+    const dragStart = ( e:any, index_in_array:any, here_ref:React.RefObject<HTMLDivElement>, space_ref:React.RefObject<HTMLDivElement> ) => {
+        dragItem.current = index_in_array;
+        console.log("=== dragStart",index_in_array);
+        console.log("=== dragStart",e.target.innerHTML);
+
+        const ref = here_ref
+        const spc = space_ref
+        console.log("=== dragStart here_ref",here_ref);
+        console.log("=== dragStart space_ref",here_ref);
+        if(spc.current) {
+            spc.current.style.display = "block";
+            spc.current.style.backgroundColor = 'yellow';
+        }
+
+
+        // ref.current.style.padding = '3rem';
+        // ref.current.style.color = 'white';
+        // ref.current.style.width = '150px';
+        // ref.current.style.height = '150px';
+        // ref.current.style.margin = '50px';
+        // ref.current.style.borderRadius = '10px';
+
+    };
+
+    const dragEnter = ( e:any, index_in_array:any, here_ref:React.RefObject<HTMLDivElement>, space_ref:React.RefObject<HTMLDivElement> ) => {
+
+        dragOverItem.current = index_in_array;
+        console.log("=== dragEnter over id ",e.target.id);
+
+        console.log("=== dragEnter event e  ",e);
+        // console.log("=== dragEnter on relativeTarget id ",e.relativeTarget.id);
+
+    };
+
+
+
+    const drop = (e:any) => {
+        if(dragItem.current && dragOverItem.current) {
+            const goto_item_id = state.data_list[dragItem.current].id
+            const copyListItems = [...state.data_list];
+            const dragItemContent = copyListItems[dragItem.current];
+            copyListItems.splice(dragItem.current, 1);
+            copyListItems.splice(dragOverItem.current, 0, dragItemContent);
+
+            dragItem.current = undefined;
+            dragOverItem.current = undefined;
+
+            set_state({
+                ...state,
+                ...{
+                    goto_item_id: goto_item_id,
+                    data_list: copyListItems
+                }
+            });
+        }
+    };
+
+
+    const goto_element_by_index = (params:any) => {
+
+        if(!params.goto){ return }
+
+        var element=null
+
+        if('down'==params.goto){
+            const el_index = state.data_list?.length-1
+            console.log('=== el_index' , el_index)
+            element = document.getElementById('card-'+el_index.toString());
+            console.log("=== element 111",element)
+        }
+        if('up'==params.goto){
+            const el_index = state.data_list[0].id
+            console.log('=== el_index' , el_index)
+            element = document.getElementById(el_index);
+            console.log("=== element top",element)
+        }
+        if('id'==params.goto){
+            const el_index = params.id
+            console.log('=== el_index' , el_index)
+            element = document.getElementById(el_index);
+            console.log("=== element id",element)
+        }
+
+        if (element) {
+            // 👇 Will scroll smoothly to the top of the next section
+            console.log('=== scrollIntoView',element)
+            // , block: "end", inline: "nearest"
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+
+
+    };
+
+    // useEffect(() => {
+    //     console.log('goto_item_id',state.goto_item_id)
+    //
+    //     goto_element_by_index({goto:'id',id:state.goto_item_id})
+    //
+    //     return () => {
+    //
+    //     };
+    // }, [state.goto_item_id]);
+
+    return (
+        <IonRow id={'list_1'} className="list_class">
+            <IonRow>111</IonRow>
+            {
+                state&&
+                state.data_list.map((item, index) => (
+                    <div key={ 'key_'+ item.id} >
+                        <div ref={spaceRefs[index]} style={{display:'none'}}>
+                            s{item.id}
+                        </div>
+                        <div
+                            className="item_class"
+                            id={item.id}
+                            ref={realRefs[index]}
+                            style={{backgroundColor:(item.id==state.goto_item_id)?'red':'lightblue', textAlign:'center', fontSize:'20px'}}
+                            onDragStart={(e) => dragStart(e, index, realRefs[index] , spaceRefs[index] )}
+                            onDragEnter={(e) => dragEnter(e, index, realRefs[index] , spaceRefs[index] ) }
+                            onDragOver ={(e) => onDragOver(e, index)}
+                            onDragEnd={drop}
+                            key={index}
+                            draggable
+                        >
+                            {item.id}
+                        </div>
+                    </div>
+                ))}
+        </IonRow>
+    );
+};
+export default GridDND;
+

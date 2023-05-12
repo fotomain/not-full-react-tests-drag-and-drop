@@ -1,0 +1,8 @@
+{
+  "name": "ionic-react-menu-starter",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react",
+  "id": "cae8f38c"
+}

@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "ionic-react-menu-starter",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
