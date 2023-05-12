@@ -10,6 +10,22 @@
     touch-action: none;
 }
 
+.app-intro {
+
+    width: 300px;
+    height: 600px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: lightgreen;
+    /*scroll!!!*/
+    overflow:auto;
+
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
+
+}
 .target3_background {
     /*https://stackoverflow.com/questions/53394067/mousemove-on-pointer-events-none-div*/
     width: 300px;

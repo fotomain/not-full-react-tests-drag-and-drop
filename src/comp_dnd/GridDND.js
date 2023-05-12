@@ -16,7 +16,7 @@
 
     class GridDND extends Component {
 
-        useState
+
 
         render() {
             return (
@@ -24,9 +24,12 @@
                     <header className="App-header">
                         <h1 className="App-title">Welcome to React sample of Point Events</h1>
                     </header>
-                    <div className="App-intro">
+                    <div className="app-intro">
                         <DragItem id={'object_111'}/>
                         <DragItem id={'object_222'}/>
+                        <DragItem id={'object_333'}/>
+                        <DragItem id={'object_444'}/>
+                        <DragItem id={'object_555'}/>
                     </div>
                 </div>);
         }

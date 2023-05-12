@@ -4,6 +4,8 @@ import React from 'react';
 const CIRCLE_DIAMETER = 100;
 
 export default class DragItem extends React.Component {
+    // https://medium.com/@leonardobrunolima/react-tips-drag-and-drop-using-point-events-2ba33cf7653e
+    // https://felixgerschau.com/react-typescript-onpointerentercapture-event-type/
     state = {
         gotCapture: false,
         circleLeft: 100,
@@ -12,6 +14,22 @@ export default class DragItem extends React.Component {
     isDragging = false;
     previousLeft = 0;
     previousTop = 0;
+
+
+    elementsOverlap = (el1, el2) => {
+
+        if(!el1 || !el2) return false
+
+        const domRect1 = el1.getBoundingClientRect();
+        const domRect2 = el2.getBoundingClientRect();
+
+        return !(
+            domRect1.top > domRect2.bottom ||
+            domRect1.right < domRect2.left ||
+            domRect1.bottom < domRect2.top ||
+            domRect1.left > domRect2.right
+        );
+    }
 
     onDown = e => {
         this.isDragging = true;
@@ -23,22 +41,41 @@ export default class DragItem extends React.Component {
             return;
         }
 
+        console.log("=== onMove",e.target.id)
         console.log("=== onMove",e)
         const {left, top} = this.getDelta(e);
-        this.setState(({circleLeft, circleTop}) => ({
+
+
+        const el_under = document.elementFromPoint(e.pageX, e.pageY)
+        console.log('=== el_under',el_under)
+
+        const overlaped = this.elementsOverlap(
+            document.getElementById('object_111'),
+            document.getElementById('object_222')
+        )
+
+        this.setState(({circleLeft, circleTop, overlaped} ) => ({
+            overlaped: this.elementsOverlap(
+                document.getElementById('object_111'),
+                document.getElementById('object_222')
+            ),
             circleLeft: circleLeft + left,
             circleTop: circleTop + top
         }));
+
     };
     onUp = e => (this.isDragging = false);
-    onGotCapture = e => this.setState({gotCapture: true});
+    onGotCapture = e => {
+        console.log("=== onGotPointerCapture",e)
+        this.setState({gotCapture: true})
+    };
     onLostCapture = e => this.setState({gotCapture: false});
     onPointerEnter = e => {
         console.log("=== onPointerEnter",e)
         this.setState({onPointerEnter: e.target.id})
     };
     onPointerOver = e => {
-        console.log("=== onPointerOver",e)
+        console.log("=== onPointerOver",e.target.id)
         this.setState({onPointerOver: e.target.id})
     };
     getDelta = e => {
@@ -58,7 +95,7 @@ export default class DragItem extends React.Component {
         const boxStyle = {
             border: '2px solid #cccccc',
             margin: '10px 0 20px',
-            minHeight: 400,
+            minHeight: 200,
             width: '100%',
             position: 'relative',
         };
@@ -78,11 +115,13 @@ export default class DragItem extends React.Component {
             <div style={boxStyle}
 
             >
+                <div> overlaped {(this.state.overlaped)?'overlaped':'not'}</div>
                 <div> onPointerEnter {this.state.onPointerEnter}</div>
                 <div> onPointerOver {this.state.onPointerOver}</div>
                 <br/>
 
                 <div
+                    {...this.props}
                     style={circleStyle}
                     onPointerDown={this.onDown}
                     onPointerMove={this.onMove}
