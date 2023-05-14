@@ -6,16 +6,17 @@
 
     export default function GridDND() {
 
-        const goto = () => {
-            console.log("=== goto")
-            return
-
-            // const element = document.getElementById(state.data_list[0].id);
-
-            // if (element) {
-                // element?.scrollIntoView({ behavior: 'smooth' });
-            // }
-        }
+        // const goto = () => {
+        //     console.log("=== goto")
+        //     return
+        //
+        //     const element = document.getElementById(state.data_list[0].id);
+        //
+        //     if (element) {
+        //         // 👇 Will scroll smoothly to the top of the next section
+        //         element?.scrollIntoView({ behavior: 'smooth' });
+        //     }
+        // }
 
         const myList = [
             { name: "one", color: "green" },
@@ -76,11 +77,8 @@
 
         return (
 
-                <div
-                    className="list_draggable"
-                    // style={{ width: 300, margin: "0 auto" }}
-                >
-                    <DraggableList width={60} height={60}
+                <div style={{ width: 300, margin: "0 auto" }}>
+                    <DraggableList width={100} height={100}
                                    // handleMouseMove={(e)=>handleMouseMove(e)}
                                    // onMoveEnd={(e) => {
                                    //     e.preventDefault()
@@ -96,9 +94,6 @@
 
                                  onPointerMove={(e)=>{
                                      console.log('=== onPointerMove',e)}
-
-
-
                                  }
                                  onPointerEnter={(e)=>{
                                      console.log('=== onPointerEnter',e)}
@@ -113,8 +108,7 @@
                                  // }}
 
 
-                                 style={{ width: 60, height: 60, background: item.color }}>
-
+                                 style={{ width: 100, height: 100, background: item.color }}>
                                 {item.name}
                             </div>
                         ))}

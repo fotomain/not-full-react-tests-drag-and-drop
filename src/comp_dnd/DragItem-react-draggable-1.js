@@ -12,10 +12,6 @@ const DragItem = (props) => {
     }
     const handleDrag = (e, data) => {
         console.log('handleDrag')
-        if (props.goto)
-        {
-            props.goto()
-        }
     }
     const handleStop = (e, data) => {
         console.log('handleStop')
