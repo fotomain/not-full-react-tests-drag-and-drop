@@ -11,13 +11,13 @@ import DraggableList from "./dist";
 
 export default function GridDND() {
 
-    const goto = () => {
+    const goto = (params) => {
         console.log("=== goto")
 
-        const element = document.getElementById('item_50');
+        const element = document.getElementById('item_'+params);
 
         if (element) {
-            element?.scrollIntoView({behavior: 'smooth'});
+            element?.scrollIntoView({alignToTop:'false', block: "end", inline: "nearest", behavior: 'smooth'});
         }
     }
 
@@ -60,6 +60,30 @@ export default function GridDND() {
         {name: "five", color: "lightblue"},
         {name: "six", color: "cyan"}, {name: "one", color: "green"},
         {name: "two", color: "blue"},
+        {name: "three", color: "red"},
+        {name: "four", color: "lightgreen"},
+        {name: "five", color: "lightblue"},
+        {name: "six", color: "cyan"}, {name: "one", color: "green"},
+        {name: "two", color: "blue"},
+        {name: "three", color: "red"},
+        {name: "three", color: "red"},
+        {name: "four", color: "lightgreen"},
+        {name: "five", color: "lightblue"},
+        {name: "six", color: "cyan"}, {name: "one", color: "green"},
+        {name: "two", color: "blue"},
+        {name: "three", color: "red"},
+        {name: "three", color: "red"},
+        {name: "four", color: "lightgreen"},
+        {name: "five", color: "lightblue"},
+        {name: "six", color: "cyan"}, {name: "one", color: "green"},
+        {name: "two", color: "blue"},
+        {name: "three", color: "red"},
+        {name: "three", color: "red"},
+        {name: "four", color: "lightgreen"},
+        {name: "five", color: "lightblue"},
+        {name: "six", color: "cyan"}, {name: "one", color: "green"},
+        {name: "two", color: "blue"},
+        {name: "three", color: "red"},
         {name: "three", color: "red"},
         {name: "four", color: "lightgreen"},
         {name: "five", color: "lightblue"},
@@ -120,15 +144,21 @@ export default function GridDND() {
                         //     console.log('=== onPointerMove', e.target.id)
                         //     }
                         // }
-                        //
-                        // onPointerEnter={(e) => {
-                        //     console.log('=== onPointerEnter', e.target.id)
-                        //     // if("item_26"===e.target.id){
-                        //     //     goto()
-                        //     // }
-                        // }
-                        // }
-                        //
+
+                        onPointerEnter={(e) => {
+                            console.log('=== onPointerEnter', e.target.id)
+                            if("item_26"===e.target.id){
+                                goto(32)
+                            }
+                            if("item_32"===e.target.id){
+                                goto(35)
+                            }
+                            if("item_35"===e.target.id){
+                                goto(39)
+                            }
+                        }
+                        }
+
                         // onPointerLeave={(e) => {
                         //     // console.log('=== onPointerLeave',e)
                         // }
