@@ -73,13 +73,20 @@ export default function GridDND() {
     const handleClick = () => {
         console.log("mylist: ", myList);
     };
-    const handleMouseMove = (e) => {
-        e.preventDefault()
-        console.log("=== coords: ", e);
-    };
+
+
     const onListChange = (e) => {
         // e.preventDefault()
         console.log("=== onListChange: ", e);
+    };
+
+    const handleMouseMove = (e) => {
+        // e.preventDefault()
+        console.log("=== handleMouseMove: ", e.from,e.to);
+    };
+    const handleMouseUp = (e) => {
+        // e.preventDefault()
+        console.log("=== handleMouseUp: ", e);
     };
 
     return (
@@ -90,6 +97,10 @@ export default function GridDND() {
         >
             <DraggableList width={60} height={60}
                            onMoveEnd={(newList) => onListChange(newList)}
+
+                           handleMouseMove={(e)=>{handleMouseMove(e)}}
+                           handleMouseUp={(e)=>{handleMouseUp(e)}}
+
                 // handleMouseMove={(e)=>handleMouseMove(e)}
                 // onMoveEnd={(e) => {
                 //     e.preventDefault()
@@ -105,30 +116,33 @@ export default function GridDND() {
                         key={'key_item_' + i}
                         id={'item_' + i}
 
-                        onPointerMove={(e) => {
-                            console.log('=== onPointerMove', e.target.id)
-
-                        }
-                        }
-                        onPointerEnter={(e) => {
-                            console.log('=== onPointerEnter', e)
-                        }
-                        }
-
-                        onPointerLeave={(e) => {
-                            // console.log('=== onPointerLeave',e)
-                        }
-                        }
-
-                        onPointerDown={(e) => {
-                            console.log('=== onPointerDown', e)
-                        }
-                        }
-                        onPointerUp={(e) => {
-                            console.log('=== onPointerUp', e.target.id)
-                            goto()
-                        }
-                        }
+                        // onPointerMove={(e) => {
+                        //     console.log('=== onPointerMove', e.target.id)
+                        //     }
+                        // }
+                        //
+                        // onPointerEnter={(e) => {
+                        //     console.log('=== onPointerEnter', e.target.id)
+                        //     // if("item_26"===e.target.id){
+                        //     //     goto()
+                        //     // }
+                        // }
+                        // }
+                        //
+                        // onPointerLeave={(e) => {
+                        //     // console.log('=== onPointerLeave',e)
+                        // }
+                        // }
+                        //
+                        // onPointerDown={(e) => {
+                        //     console.log('=== onPointerDown', e.target.id)
+                        // }
+                        // }
+                        // onPointerUp={(e) => {
+                        //     console.log('=== onPointerUp', e.target.id)
+                        //     // goto()
+                        // }
+                        // }
 
 
                         // onDragOver={event=> {

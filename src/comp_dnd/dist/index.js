@@ -578,7 +578,9 @@ var Motion = (function (_React$Component) {
     this.startAnimationIfNecessary();
   };
 
-  Motion.prototype.componentWillReceiveProps = function componentWillReceiveProps(props) {
+
+  Motion.prototype.UNSAFE_componentWillReceiveProps = function componentWillReceiveProps(props) {
+
     if (this.unreadPropStyle != null) {
       // previous props haven't had the chance to be set yet; set them here
       this.clearUnreadPropStyle(this.unreadPropStyle);
@@ -840,6 +842,7 @@ var StaggeredMotion = (function (_React$Component) {
     };
 
     this.state = this.defaultState();
+
   }
 
   StaggeredMotion.prototype.defaultState = function defaultState() {
@@ -864,7 +867,7 @@ var StaggeredMotion = (function (_React$Component) {
     this.startAnimationIfNecessary();
   };
 
-  StaggeredMotion.prototype.componentWillReceiveProps = function componentWillReceiveProps(props) {
+  StaggeredMotion.prototype.UNSAFE_componentWillReceiveProps = function componentWillReceiveProps(props) {
     if (this.unreadPropStyles != null) {
       // previous props haven't had the chance to be set yet; set them here
       this.clearUnreadPropStyle(this.unreadPropStyles);
@@ -1469,7 +1472,7 @@ var TransitionMotion = (function (_React$Component) {
     this.startAnimationIfNecessary();
   };
 
-  TransitionMotion.prototype.componentWillReceiveProps = function componentWillReceiveProps(props) {
+  TransitionMotion.prototype.UNSAFE_componentWillReceiveProps = function componentWillReceiveProps(props) {
     if (this.unreadPropStyles) {
       // previous props haven't had the chance to be set yet; set them here
       this.clearUnreadPropStyle(this.unreadPropStyles);
@@ -1653,6 +1656,7 @@ var DraggableList = /** @class */ (function (_super) {
     function DraggableList(props) {
         var _this = _super.call(this, props) || this;
         _this.handleMouseDown = function (params) {
+
             var key = params.key, pressLocation = params.pressLocation, e = params.e;
             var pressX = pressLocation[0], pressY = pressLocation[1];
             var pageX = e.pageX, pageY = e.pageY;
@@ -1663,6 +1667,9 @@ var DraggableList = /** @class */ (function (_super) {
                 mouseDelta: [pageX - pressX, pageY - pressY],
                 mouseXY: [pressX, pressY]
             });
+
+
+
             e.preventDefault();
         };
         _this.handleClick = function (e) {
@@ -1688,6 +1695,15 @@ var DraggableList = /** @class */ (function (_super) {
                     max: Math.floor(count / rowSize)
                 });
                 var index = row * rowSize + col;
+
+                const t_from_to = {
+                  from: orders.indexOf(lastPress).toString(),
+                  to: index.toString()
+                }
+              // POINT-OF-CHANGES !!!
+              // === handleMouseMove:  19 22 !!! LISTEN LAST from<>to !!!!
+              // === handleMouseMove:  22 22
+
                 var newOrders = reinsert({
                     arr: orders,
                     from: orders.indexOf(lastPress),
@@ -1698,6 +1714,20 @@ var DraggableList = /** @class */ (function (_super) {
                     isMoved: Math.abs(mouseXY[0]) > 10 || Math.abs(mouseXY[1]) > 10,
                     orders: newOrders
                 });
+
+              if(props.handleMouseMove){
+                props.handleMouseMove(
+                    {
+                      mouseXY: mouseXY,
+                      isMoved: Math.abs(mouseXY[0]) > 10 || Math.abs(mouseXY[1]) > 10,
+                      orders: newOrders,
+                      from: t_from_to.from,
+                      to: t_from_to.to,
+                    }
+                )
+              }
+
+
             }
         };
         _this.handleMouseUp = function () {
@@ -1705,14 +1735,26 @@ var DraggableList = /** @class */ (function (_super) {
                 isPressed: false,
                 mouseDelta: [0, 0]
             });
+
+            if(props.handleMouseUp){
+              props.handleMouseUp(
+                  {
+                    isPressed: false,
+                    mouseDelta: [0, 0]
+                  }
+              )
+            }
+
         };
         _this.getLayout = function () {
             var _a = _this.state, count = _a.count, width = _a.width, height = _a.height, rowSize = _a.rowSize;
-            return Array.from({ length: count }, function (_, n) {
+            const ret1 = Array.from({ length: count }, function (_, n) {
                 var row = Math.floor(n / rowSize);
                 var col = n % rowSize;
                 return [width * col, height * row];
             });
+          // console.log("=== getLayout",ret1)
+            return ret1
         };
         var _a = _this.props, _b = _a.rowSize, rowSize = _b === void 0 ? 3 : _b, width = _a.width, height = _a.height, children = _a.children;
         var newChildren = Array.isArray(children) ? children.slice() : [children];
