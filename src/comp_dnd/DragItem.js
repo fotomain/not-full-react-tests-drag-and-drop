@@ -113,6 +113,17 @@ export default class DragItem extends React.Component {
         {/*{...props}*/}
         return (
             <div style={boxStyle}
+                 id={'box_'+this.props.id}
+
+                 onPointerDown={this.onDown}
+                 onPointerMove={this.onMove}
+                 onPointerUp={this.onUp}
+                 onPointerCancel={this.onUp}
+                 onGotPointerCapture={this.onGotCapture}
+                 onLostPointerCapture={this.onLostCapture}
+                 onPointerEnter={this.onPointerEnter}
+                 onPointerOver={this.onPointerOver}
+
 
             >
                 <div> overlaped {(this.state.overlaped)?'overlaped':'not'}</div>
@@ -123,14 +134,15 @@ export default class DragItem extends React.Component {
                 <div
                     {...this.props}
                     style={circleStyle}
-                    onPointerDown={this.onDown}
-                    onPointerMove={this.onMove}
-                    onPointerUp={this.onUp}
-                    onPointerCancel={this.onUp}
-                    onGotPointerCapture={this.onGotCapture}
-                    onLostPointerCapture={this.onLostCapture}
-                    onPointerEnter={this.onPointerEnter}
-                    onPointerOver={this.onPointerOver}
+
+                    // onPointerDown={this.onDown}
+                    // onPointerMove={this.onMove}
+                    // onPointerUp={this.onUp}
+                    // onPointerCancel={this.onUp}
+                    // onGotPointerCapture={this.onGotCapture}
+                    // onLostPointerCapture={this.onLostCapture}
+                    // onPointerEnter={this.onPointerEnter}
+                    // onPointerOver={this.onPointerOver}
                 />
             </div>
         );
