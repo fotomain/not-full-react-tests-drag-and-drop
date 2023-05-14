@@ -26,6 +26,7 @@
     "react-dom": "^18.2.0",
     "react-drag-drop-container": "^6.1.1",
     "react-draggable": "^4.4.5",
+    "react-draggable-list": "^4.1.0",
     "react-draggable-lists": "^1.0.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
