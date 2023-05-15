@@ -1779,7 +1779,7 @@ var DraggableList = /** @class */ (function (_super) {
     DraggableList.prototype.render = function () {
         var _this = this;
         var _a = this.state, width = _a.width, height = _a.height, count = _a.count, rowSize = _a.rowSize, orders = _a.orders, lastPress = _a.lastPress, isPressed = _a.isPressed, mouseXY = _a.mouseXY, children = _a.children;
-        return (React.createElement("div", { style: {
+        return (React.createElement("div", { ref:_this.props.list_ref, id:_this.props.list_id, style: {
                 height: height * Math.ceil(count / rowSize)
             } }, orders.map(function (_, key) {
             var _a;
