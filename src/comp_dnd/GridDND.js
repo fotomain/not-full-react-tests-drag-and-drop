@@ -2,12 +2,9 @@
 import React, { useState } from "react";
 import "./styles.css";
 
-// import { Box } from "grommet";
-
 // npm i dnd-kit
 // npm i @dnd-kit/sortable
 // npm i @dnd-kit/core
-
 
 import {
     DndContext,
