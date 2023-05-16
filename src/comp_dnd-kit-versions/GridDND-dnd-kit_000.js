@@ -1,6 +1,6 @@
 
 import React, {useCallback, useEffect, useState} from "react";
-import "./styles.css";
+import "../comp_dnd/styles.css";
 
 
 // npm i dnd-kit
