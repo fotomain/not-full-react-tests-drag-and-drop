@@ -7,6 +7,29 @@
 /*}*/
 
 
+.Grid {
+    border: 1px solid #d9dddd;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.GridItemEven,
+.GridItemOdd {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.GridItemEven {
+    background-color: #f8f8f0;
+}
+
+
+/*==*/
+/*==*/
+/*==*/
+
 .demo2-outer {
     width: 500px;
     height: 400px;

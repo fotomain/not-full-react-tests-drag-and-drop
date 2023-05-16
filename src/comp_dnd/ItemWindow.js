@@ -24,7 +24,8 @@ function SortableItem({ index, style, data }) {
         ...(style ?? {}),
         backgroundColor: index % 2 === 0 ? "white" : "lightgrey",
         transform: CSS.Transform.toString(transform),
-        transition
+        transition,
+        width:'70px'
     };
 
     return (
