@@ -22,12 +22,16 @@ const Example = () => {
 
     const gridRef = useRef();
 
-    const init_state={device_is_mobile:false}
+    const init_state={
+        device_is_mobile:false,
+        rows:20,
+        columns:20,
+    }
     const [state, set_state] = React.useState(init_state);
 
 
     const [items, setItems] = React.useState(
-        [...Array(200).keys()].map((index) => `Item ${index}`)
+        [...Array(state.columns*state.columns).keys()].map((index) => `Item ${index}`)
     );
 
 
@@ -39,13 +43,13 @@ const Example = () => {
 
         const { columnIndex, rowIndex, style } = props
 
-        const tindex = columnIndex + rowIndex*10
+        const tindex = columnIndex + rowIndex*state.columns
         console.log("=== tindex",tindex)
 
         return(
             <SortableItem index={tindex} style={style} data={items} >
             <div
-                index={columnIndex} style={style}
+                index={columnIndex} style={{...style,...{border:'1px solid red'}}}
                 className={
                     columnIndex % 2
                         ? rowIndex % 2 === 0
@@ -203,14 +207,17 @@ const Example = () => {
                 <Grid
                     className="Grid"
 
-                    columnCount={10}
-                    rowCount={10}
+                    columnCount={state.columns}
+                    rowCount={state.rows}
 
                     columnWidth={100}
-                    height={150}
+
                     ref={gridRef}
                     rowHeight={35}
-                    width={300}
+
+                    width={500}
+                    height={500}
+
                     data={items}
                 >
 
