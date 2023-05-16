@@ -1,0 +1,163 @@
+
+
+/*=== DOC https://ishadeed.com/article/custom-scrollbars-css/*/
+
+/*.draggable {*/
+/*    background-color: red;*/
+/*}*/
+
+
+.demo2-outer {
+    height: 400px;
+    width: 500px;
+    /*height: 100%;*/
+    /*width: 100%;*/
+    position: absolute;
+    background-color: #EEE;
+
+    display: flex;
+    display: -webkit-flex;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow:auto;
+
+    justify-content: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;
+}
+
+.demo2 {
+    width: 190px;
+    height: 320px;
+}
+
+.demo2-ball {
+    position: absolute;
+    border: 1px solid black;
+    border-radius: 99px;
+    width: 50px;
+    height: 50px;
+}
+
+.block {
+    background: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    height: 100px;
+    width: 200px;
+    color: #333;
+    background-color:lightgreen;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.notouch {
+    touch-action: none;
+}
+
+.app-intro {
+
+    width: 300px;
+    height: 400px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: lightgreen;
+    /*touch-action: none;*/
+    /*scroll!!!*/
+    overflow:auto;
+    /*touch-action: none;*/
+    /**/
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
+
+}
+.target3_background {
+    /*https://stackoverflow.com/questions/53394067/mousemove-on-pointer-events-none-div*/
+    width: 300px;
+    height: 300px;
+    background: lightgreen;
+    /*pointer-events: none;*/
+    touch-action: none;
+}
+/**/
+.item_class {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
+
+.card {
+    height:50px;
+    width:100px;
+    padding: 25px;
+    margin: 1em;
+    background: pink;
+    border: #ddd solid 1px;
+
+}
+
+.cards_class {
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+
+    position: relative;
+    width: auto;
+
+    overflow: auto;
+    border-radius: 0.5em;
+
+    margin: 0 auto;
+
+}
+
+.list_infinite_class {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: relative;
+    width: auto;
+
+    overflow: auto;
+
+    border-radius: 0.5em;
+
+    margin: 0 auto;
+
+}
+
+.list_class {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    flex-wrap:wrap;
+    /*margin: 0 auto;*/
+    height: 600px;
+    background-color: green;
+    overflow: auto;
+}
+
+.list_draggable {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    flex-wrap:wrap;
+
+    width: 600px;
+    height: 600px;
+    background-color: pink;
+    overflow-y:auto;
+}
