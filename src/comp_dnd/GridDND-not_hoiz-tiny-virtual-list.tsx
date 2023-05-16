@@ -2,10 +2,12 @@
 import React, {useCallback, useEffect, useState} from "react";
 import "./styles.css";
 
-
 // npm i dnd-kit
 // npm i @dnd-kit/sortable
 // npm i @dnd-kit/core
+// npm install react-tiny-virtual-list --save
+// npm i --save @types/react-tiny-virtual-list
+
 
 import {
     DndContext,
@@ -27,9 +29,12 @@ import {
 
 import SortableItem from "../tests_not_full/SortableItem";
 
+import VirtualList, {ItemStyle} from 'react-tiny-virtual-list';
+import SortableItemInfinit from "./SortableItemInfinit";
+
 const device_info = () => {
 
-    var ret = {}
+    var ret = {device_is_mobile:false}
 
     if (navigator.userAgent.match(/Android/i)
         || navigator.userAgent.match(/webOS/i)
@@ -48,10 +53,10 @@ const device_info = () => {
     return ret;
 }
 
-const GridDND = (props) => {
+const GridDND = (props:any) => {
 
 
-    const init_state={}
+    const init_state={device_is_mobile:false}
 
     const [state, set_state] = React.useState(init_state);
 
@@ -90,24 +95,24 @@ const GridDND = (props) => {
     ]);
 
     const sensors_mobile = useSensors(
-            useSensor(TouchSensor),
-            // useSensor(MouseSensor),
-            // useSensor(PointerSensor),
-            useSensor(KeyboardSensor, {
-                coordinateGetter: sortableKeyboardCoordinates
-            })
-        );
+        useSensor(TouchSensor),
+        // useSensor(MouseSensor),
+        // useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates
+        })
+    );
 
     const sensors_desktop = useSensors(
-            // useSensor(TouchSensor),
-            // useSensor(MouseSensor),
-            useSensor(PointerSensor),
-            useSensor(KeyboardSensor, {
-                coordinateGetter: sortableKeyboardCoordinates
-            })
-        );
+        // useSensor(TouchSensor),
+        // useSensor(MouseSensor),
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates
+        })
+    );
 
-    const handleDragStart = (event) => {
+    const handleDragStart = (event:any) => {
         setActiveId(event.active.id);
     };
 
@@ -120,7 +125,7 @@ const GridDND = (props) => {
     });
 
 
-    const handleDragEnd = (event) => {
+    const handleDragEnd = (event:any) => {
         setActiveId(null);
         const { active, over } = event;
 
@@ -172,7 +177,7 @@ const GridDND = (props) => {
                 onDragEnd={handleDragEnd}
                 onDragCancel={handleDragCancel}
             >
-                <div className="app-intro"
+                <div id="sort_context" className="app-intro"
                     // flex={true}
                     // wrap={true}
                     // direction="row"
@@ -180,21 +185,57 @@ const GridDND = (props) => {
                     //     maxWidth: "600px"
                     // }}
                 >
-                    <SortableContext items={items} strategy={rectSortingStrategy}>
-                        {items.map((id) => (
-                            <SortableItem key={id} id={id} handle={true} value={id} />
-                        ))}
-                        <DragOverlay>
-                            {activeId ? (
-                                <div
-                                    style={{
-                                        width: "100px",
-                                        height: "100px",
-                                        backgroundColor: "red"
-                                    }}
-                                ></div>
-                            ) : null}
-                        </DragOverlay>
+                    <SortableContext
+                        items={items} strategy={rectSortingStrategy}
+                    >
+
+                        <VirtualList
+                            // id={'list1'}
+                            // style={{}}
+                            className="app-intro"
+                            width={500}
+                            height={400}
+                            // className={styles.VirtualList}
+                            itemCount={items.length}
+                            itemSize={64}
+                            stickyIndices={activeId ? [items.indexOf(activeId)] : undefined}
+                            renderItem={(p:{index:number, style:ItemStyle}) => {
+                                const id = items[p.index];
+
+                                return (
+                                    <SortableItemInfinit
+                                        key={id}
+                                        id={id}
+                                        index={p.index}
+                                        // handle={handle}
+                                        wrapperStyle={() => ({
+                                            ...p.style,
+                                            padding: 5,
+                                        })}
+                                        // style={getItemStyles}
+                                        value={id}
+                                        useDragOverlay
+                                    />
+                                );
+                            }}
+                        />
+
+                        {/*{items.map((id) => (*/}
+                        {/*    <SortableItem key={id} id={id} handle={true} value={id} />*/}
+                        {/*))}*/}
+                        {/*<DragOverlay>*/}
+                        {/*    {activeId ? (*/}
+                        {/*        <div*/}
+                        {/*            style={{*/}
+                        {/*                width: "100px",*/}
+                        {/*                height: "100px",*/}
+                        {/*                backgroundColor: "red"*/}
+                        {/*            }}*/}
+                        {/*        ></div>*/}
+                        {/*    ) : null}*/}
+                        {/*</DragOverlay>*/}
+
+
                     </SortableContext>
                 </div>
             </DndContext>
